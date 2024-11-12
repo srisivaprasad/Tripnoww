@@ -1,0 +1,120 @@
+server {
+    listen 80;
+    server_name staging.tripnoww.com;
+
+    location / {
+        root /var/www/html/tripnowbc/browser/;
+        index index.html;
+        try_files $uri /index.html =404;  # Fallback to index.html for Angular routes
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location /concord/ {
+        alias /var/www/html/admin/;
+        index index.html;
+        try_files $uri $uri/ /index.html =404;
+    }
+
+    client_max_body_size 10M;
+
+    # Various proxied paths
+    location ^~ /administration {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/administration;
+    }
+    location ^~ /flight {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/flight;
+    }
+    location ^~ /catalog {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/catalog;
+    }
+    location ^~ /authenticate {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/authenticate;
+    }
+    location ^~ /customers {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/customers;
+    }
+    location ^~ /productsearch {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/productsearch;
+    }
+    location ^~ /orders {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/orders;
+    }
+    location ^~ /sitesettings {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/sitesettings;
+    }
+    location ^~ /promotions {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/promotions;
+    }
+    location ^~ /reports {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/reports;
+    }
+    location ^~ /scheduler {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/scheduler;
+    }
+    location ^~ /templates {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/templates;
+    }
+    location ^~ /workflow {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/workflow;
+    }
+    location ^~ /exportimport {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/exportimport;
+    }
+    location ^~ /cms {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/cms;
+    }
+    location ^~ /ticketbooking {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/ticketbooking;
+    }
+    location ^~ /paymentgateway {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:8060/paymentgateway;
+    }
+    location ^~ /tripnowadmin {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://localhost:8050/tripnowadmin;
+    }
+    location ^~ /ai-ccavenue {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://localhost:3000/ai-ccavenue;
+    }
+}
